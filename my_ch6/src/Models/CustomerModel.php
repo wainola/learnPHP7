@@ -6,10 +6,13 @@ use Bookstore\Entities\Customer;
 class CustomerModel extends AbstractModel{
 
     public function get(int $userId){
-        $query = 'SELECT * FROM customer WHERE customer_id = :user';
+        // generacion del query para consulta la base de datos.
+        $query = 'SELECT * FROM customer WHERE id = :user';
+        // preparacion de la sentencia.
         $sth = $this->db->prepare($query);
         $sth->execute(['user' => $userId]);
 
+        // fetcheado de la sentencia de los datos.
         $row = $sth->fetch();
 
         if(empty($row)){

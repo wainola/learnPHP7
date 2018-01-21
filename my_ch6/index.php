@@ -17,6 +17,14 @@ $conexion = $db->connect();
 
 $router->route($request);
 $customerModel = new CustomerModel($conexion);
-var_dump($customerModel);
+$c1 = $customerModel->get(1);
 // $c = 'Bookstore\Controllers\BookController';
 // $d = new $c();
+
+
+// Cargando Twig para las vistas.
+$loader = new Twig_Loader_Filesystem(__DIR__ . '/views');
+$twig = new Twig_Environment($loader);
+
+$parametros_twig = ['customer' => $c1];
+echo $twig->loadTemplate('customer.twig')->render($parametros_twig);
