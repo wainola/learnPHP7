@@ -6,6 +6,8 @@ namespace Bookstore\Core;
 
 use Bookstore\Core\FilteredMap;
 
+// require_once '../../vendor/autoload.php';
+
 class Request{
 
     const GET = "GET";
@@ -23,8 +25,8 @@ class Request{
         $this->ruta = explode('?', $_SERVER['REQUEST_URI'])[0];
         $this->metodo = $_SERVER['REQUEST_METHOD'];
         // el resto de los elementos se setearan a posteriori
-        $this->params = new FilteredMap(array_merge($_POST, $_GET));
-        $this->cookie = new FilteredMap($_COOKIE);
+        $this->parametros = new FilteredMap(array_merge($_POST, $_GET));
+        $this->cookies = new FilteredMap($_COOKIE);
     }
 
     public function getUrl():string{
@@ -50,8 +52,4 @@ class Request{
     public function isGet():bool{
         return $this->metodo === self::GET;
     }
-
 }
-
-$d = new Request();
-var_dump($d);

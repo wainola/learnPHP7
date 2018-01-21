@@ -34,4 +34,3 @@ class FilteredMap{
         return $filter ? addcslashes($value) : $value;
     }
 }
-
