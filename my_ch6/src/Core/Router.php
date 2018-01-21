@@ -65,16 +65,21 @@ class Router{
 
         // Primer paso: ejecutar el controlador
         $controllerName = 'Bookstore\Controllers\\' . $controlador . 'Controller';
-        $controller = new $controllerName();
+        $controller = new $controllerName($request);
+        
         // si el metodo es login, entonces pedimos las cookies
         // si la cookie no tiene el usuario, entonces debemos logear al usuario para generar la cookie
+        
         if($metodo == "login"){
             if($request->getCookies()->has('user')){
                 print_r("Existe la cookie");
             } else {
+                
                 // inicializamos el customer controller. 
                 // retornamos el seteo del login
-                $errorController = new CustomerController();
+                $errorController = new CustomerController($request);
+                print_r($errorController->login());
+                //var_dump($errorController);
             }
         }
         //var_dump($controllerName);

@@ -5,7 +5,7 @@ AbstractController: implementa algunos metodos abstractos que son posteriormente
 
 namespace Bookstore\Controllers;
 
-use Booskstore\Core\Request;
+use Bookstore\Core\Request;
 
 abstract class AbstractController{
     protected $request;
@@ -13,7 +13,7 @@ abstract class AbstractController{
     protected $di;
     protected $customerId;
 
-    public function __contruct(Request $request){
+    public function __construct(Request $request){
         $this->request = $request;
         $this->di = "di";
     }
