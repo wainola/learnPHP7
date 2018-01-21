@@ -13,22 +13,31 @@ namespace Bookstore\Core;
 use Bookstore\Core\Request;
 use Bookstore\Controllers\BookController;
 use Bookstore\Controllers\CustomerController;
+use Bookstore\Utils\DependencyInjector;
 
 //require_once '../../vendor/autoload.php';
 
 class Router{
+    /*
+    Mapeo de las rutas a traves de la carga del json
+    */
     private $routeMap;
+    /*
+    Inyector de dependencias
+    */
+    private $di;
 
     private static $regexPatterns = [
         'number' => '\d+',
         'string' => '\w'
     ];
 
-    public function __construct(){
+    public function __construct(DependencyInjector $di){
         // cargando el json con las rutas
         $json = file_get_contents(__DIR__ . '/../../config/routes.json');
         // seteamos el atributo privado y con true indicamos que es un arreglo asociativo.
         $this->routeMap = json_decode($json, true);
+        $this->di = $di;
     }
 
     public function getRouteMap(){
@@ -48,7 +57,9 @@ class Router{
                 $controlador = $info['controller'];
                 $metodo = $info['method'];
                 //print_r([$controlador, $metodo]);
-                print_r($this->executeController($ruta, $controlador, $metodo, $request));
+
+                // Se ejecutar el contador que se obtiene del json en razon de la ruta generada
+                $this->executeController($ruta, $controlador, $metodo, $request);
 
             } else {
                 // print_r("no hay match para la ruta requerida");
@@ -65,7 +76,7 @@ class Router{
 
         // Primer paso: ejecutar el controlador
         $controllerName = 'Bookstore\Controllers\\' . $controlador . 'Controller';
-        $controller = new $controllerName($request);
+        $controller = new $controllerName($this->di, $request);
         
         // si el metodo es login, entonces pedimos las cookies
         // si la cookie no tiene el usuario, entonces debemos logear al usuario para generar la cookie
@@ -77,7 +88,7 @@ class Router{
                 
                 // inicializamos el customer controller. 
                 // retornamos el seteo del login
-                $errorController = new CustomerController($request);
+                $errorController = new CustomerController($this->di, $request);
                 print_r($errorController->login());
                 //var_dump($errorController);
             }
@@ -86,8 +97,3 @@ class Router{
 
     }
 }
-
-
-// $r = new Router();
-// $request = new Request();
-// $r->route($request);
