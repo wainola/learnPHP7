@@ -52,4 +52,8 @@ class Request{
     public function isGet():bool{
         return $this->metodo === self::GET;
     }
+
+    public function getCookies(){
+        return $this->cookies;
+    }
 }

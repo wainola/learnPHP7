@@ -12,6 +12,7 @@ namespace Bookstore\Core;
 
 use Bookstore\Core\Request;
 use Bookstore\Controllers\BookController;
+use Bookstore\Controllers\CustomerController;
 
 //require_once '../../vendor/autoload.php';
 
@@ -47,7 +48,7 @@ class Router{
                 $controlador = $info['controller'];
                 $metodo = $info['method'];
                 //print_r([$controlador, $metodo]);
-                print_r($this->executeController($ruta, $controlador, $metodo));
+                print_r($this->executeController($ruta, $controlador, $metodo, $request));
 
             } else {
                 // print_r("no hay match para la ruta requerida");
@@ -60,12 +61,23 @@ class Router{
     Si hay match entonces ejecutamos la funcion ExecuteController que es privada.
     */
 
-    private function executeController(string $ruta, string $controlador, string $metodo){
+    private function executeController(string $ruta, string $controlador, string $metodo, Request $request){
 
         // Primer paso: ejecutar el controlador
         $controllerName = 'Bookstore\Controllers\\' . $controlador . 'Controller';
         $controller = new $controllerName();
-        var_dump($controllerName);
+        // si el metodo es login, entonces pedimos las cookies
+        // si la cookie no tiene el usuario, entonces debemos logear al usuario para generar la cookie
+        if($metodo == "login"){
+            if($request->getCookies()->has('user')){
+                print_r("Existe la cookie");
+            } else {
+                // inicializamos el customer controller. 
+                // retornamos el seteo del login
+                $errorController = new CustomerController();
+            }
+        }
+        //var_dump($controllerName);
 
     }
 }
