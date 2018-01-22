@@ -83,11 +83,12 @@ class Router{
                 echo $errorController->login();
                 //var_dump($errorController);
             }
+        } else {
+            // si no esta pidiendo el login, entonces carga el controlador que corresponde
+            // asi le podemos pasar parametros a la funcion
+            //return call_user_func([$controller, $metodo], "nicolas");
+            echo call_user_func([$controller, $metodo]);
         }
-        // si no esta pidiendo el login, entonces carga el controlador que corresponde
-        // asi le podemos pasar parametros a la funcion
-        //return call_user_func([$controller, $metodo], "nicolas");
-        echo call_user_func([$controller, $metodo]);
 
     }
 }
