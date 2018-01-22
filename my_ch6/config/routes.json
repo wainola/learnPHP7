@@ -1,4 +1,8 @@
 {
+    "index": {
+      "controller": "Main",
+      "method": "index"
+    },
     "books/:page": {
       "controller": "Book",
       "method": "getAllWithPage",

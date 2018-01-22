@@ -5,7 +5,9 @@ Controlador de los Libros.
 */
 
 class BookController extends AbstractController{
-    public function __construct(){
-        print_r("BookController!!");
+
+    public function getAll(){
+        return $this->render('allBooks.twig', []);
+        //print_r("getAll function" . " $str");
     }
 }
