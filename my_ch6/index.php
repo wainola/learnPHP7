@@ -27,7 +27,7 @@ $di = new DependencyInjector();
 
 // Seteando las dependencias a inyectar
 $di->set('PDO', $db_configuracion);
-$di->set('Twig_Enviroment', $view);
+$di->set('Twig_Environment', $view);
 $di->set('Utils\Config', $configuracion);
 
 // Instancia de router para manejar los request que van entrando.

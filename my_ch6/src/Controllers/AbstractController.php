@@ -21,9 +21,19 @@ abstract class AbstractController{
     public function __construct(DependencyInjector $di, Request $request){
         $this->request = $request;
         $this->di = $di;
+
+        // Seteo de las propiedades 
+        $this->db = $di->get('PDO');
+        $this->view = $di->get('Twig_Environment');
+        $this->config = $di->get('Utils\Config');
     }
 
     public function setCustomerId(int $customerId){
         $this->customerId = $customerId;
+    }
+
+    // funcion que renderear los templates segun corresponda.
+    protected function render(string $template, array $parametros){
+        return $this->view->loadTemplate($template)->render($parametros);
     }
 }
